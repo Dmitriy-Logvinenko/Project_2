@@ -47,12 +47,23 @@ class Aeroplane:
         return str_info_aeroplane
 
     @staticmethod
-    def cast_to_object_list(list_aeroplanes: dict) -> list[Aeroplane]:
-        my_list = []
-        for i in list_aeroplanes.get('states', []):
-            my_list.append(Aeroplane(i[2], i[1], i[9], i[13], i[10]))
-        return my_list
+    def cast_to_object_list(dict_aeroplanes: dict) -> list[list[Aeroplane]]:
+        list_aeroplanes = []
+        for i in dict_aeroplanes.get('states', []):
+            list_aeroplane = []
+            list_aeroplane.append(Aeroplane(i[2], i[1], i[9], i[13], i[10]))
+            list_aeroplanes.append(list_aeroplane)
+        return list_aeroplanes
 
+    def geo_altitude_comparison(self, other):
+        if self.geo_altitude < other.geo_altitude:
+            return True
+        return False
+
+    def speed_comparison(self, other):
+        if self.velocity > other.velocity:
+            return True
+        return False
 
 if __name__ == "__main__":
     api = AeroplanesAPI()
