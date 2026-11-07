@@ -6,25 +6,25 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-opensky_url = os.getenv('OPENSKY_URL')
-openstreetmap_url = os.getenv('OPENSTREETMAP_URL')
+opensky_url = os.getenv('OPENSKY_URL', "")
+openstreetmap_url = os.getenv('OPENSTREETMAP_URL', "")
 
 
 class BaseAPI(ABC):
 
     @abstractmethod
-    def __init__(self):
-        super().__init__()
+    def get_aeroplanes(self, country: str) -> dict:
+        pass
 
 
-class APIAdapter(BaseAPI):
+class AeroplanesAPI(BaseAPI):
 
     def __init__(self) -> None:
         self.openstreetmap_url = openstreetmap_url
         self.opensky_url = opensky_url
         self.aeroplanes = None
 
-    def get_aeroplanes(self, country: str) -> None:
+    def get_aeroplanes(self, country: str) -> dict:
         headers_nominatim = {
             'User-Agent': 'test-app',
         }
@@ -50,4 +50,13 @@ class APIAdapter(BaseAPI):
 
         response = get(url=self.opensky_url, params=params)
 
-        self.aeroplanes = response.json()
+        self.aeroplanes = dict(response.json())
+
+        return self.aeroplanes
+
+
+if __name__ == "__main__":
+    api = AeroplanesAPI()
+    ati = api.get_aeroplanes('Canada')
+
+    print(api.aeroplanes)

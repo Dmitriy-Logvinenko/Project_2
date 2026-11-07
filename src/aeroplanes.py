@@ -49,10 +49,12 @@ class Aeroplane:
     @staticmethod
     def cast_to_object_list(dict_aeroplanes: dict) -> list[list[Aeroplane]]:
         list_aeroplanes = []
+
         for i in dict_aeroplanes.get('states', []):
             list_aeroplane = []
-            list_aeroplane.append(Aeroplane(i[2], i[1], i[9], i[13], i[10]))
+            list_aeroplane.append(Aeroplane(i[2], i[1].strip(), i[9], i[13], i[10]))
             list_aeroplanes.append(list_aeroplane)
+
         return list_aeroplanes
 
     def geo_altitude_comparison(self, other):
@@ -65,10 +67,24 @@ class Aeroplane:
             return True
         return False
 
+    @staticmethod
+    def filter_aeroplanes(aeroplanes: list[list[Aeroplane]], country_reg: str) -> list[list[Aeroplane]]:
+        """Функция для фильтрации самолётов по стране регистрации"""
+        filter_list = list()
+
+        for aeroplane in aeroplanes:
+            if aeroplane[0] == country_reg:
+                filter_list.append(aeroplane)
+
+        return filter_list
+
+
 if __name__ == "__main__":
     api = AeroplanesAPI()
     ati = api.get_aeroplanes('Canada')
 
-    print(Aeroplane.cast_to_object_list(ati))
+    pi = Aeroplane.cast_to_object_list(ati)
+    print(pi)
+    print(Aeroplane.filter_aeroplanes(pi, 'Canada'))
 
 # str метод для читаемого вывода
