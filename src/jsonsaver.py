@@ -11,7 +11,7 @@ class BaseJSONSaver(ABC):
         pass
 
     @abstractmethod
-    def delete_aeroplane(self, aeroplane):
+    def delete_aeroplane(self):
         pass
 
 
@@ -21,10 +21,12 @@ class JSONSaver(BaseJSONSaver):
         base_path = os.path.dirname(os.path.dirname(__file__))
         full_path = os.path.join(base_path, "data", "aeroplanes.json")
 
-        with open(full_path, 'a', encoding="UTF-8") as f:
-            json.dump(aeroplane, f)
+        str_aeroplane = str(aeroplane)
 
-    def delete_aeroplane(self, aeroplane):
+        with open(full_path, 'a', encoding="UTF-8") as f:
+            json.dump(str_aeroplane, f)
+
+    def delete_aeroplane(self):
         base_path = os.path.dirname(os.path.dirname(__file__))
         full_path = os.path.join(base_path, "data", "aeroplanes.json")
 
