@@ -16,13 +16,13 @@ class Aeroplane:
     def __validation_country_reg(country_reg: str) -> str | None:
         if type(country_reg) is str:
             return country_reg
-        return 'Самолёт не найден.'
+        return "Самолёт не найден."
 
     @staticmethod
     def __validation_callsign(callsign: str) -> str | None:
-        if type(callsign) is str and callsign != '':
+        if type(callsign) is str and callsign != "":
             return callsign
-        return 'Позывной отсутствует'
+        return "Позывной отсутствует"
 
     @staticmethod
     def __validation_velocity(velocity: float) -> float:
@@ -43,19 +43,19 @@ class Aeroplane:
         return 0
 
     def __repr__(self):
-        str_info_aeroplane = (f'{self.country_reg}, '
-                              f'{self.callsign}, {self.velocity}, {self.geo_altitude}, {self.true_track}')
+        str_info_aeroplane = (f"{self.country_reg}, "
+                              f"{self.callsign}, {self.velocity}, {self.geo_altitude}, {self.true_track}")
         return str_info_aeroplane
 
     def __str__(self):
-        str_aeroplanes = f'{self.country_reg}, {self.callsign}, {self.velocity}, {self.geo_altitude}, {self.true_track}'
+        str_aeroplanes = f"{self.country_reg}, {self.callsign}, {self.velocity}, {self.geo_altitude}, {self.true_track}"
         return str_aeroplanes
 
     @staticmethod
     def cast_to_object_list(dict_aeroplanes: dict) -> list[list[Aeroplane]]:
         list_aeroplanes = []
 
-        for i in dict_aeroplanes.get('states', []):
+        for i in dict_aeroplanes.get("states", []):
             list_aeroplane = []
             list_aeroplane.append(Aeroplane(i[2], i[1].strip(), i[9], i[13], i[10]))
             list_aeroplanes.append(list_aeroplane)
@@ -72,12 +72,11 @@ class Aeroplane:
         sorted_aeroplanes = sorted(aeroplanes, key=lambda k: k[0].velocity, reverse=True)
         return sorted_aeroplanes
 
-
     @staticmethod
     def filter_aeroplanes(aeroplanes: list[list[Aeroplane]], filter_words: str) -> list[list[Aeroplane]]:
         """Функция для фильтрации самолётов по стране регистрации"""
         filter_list = list()
-        filter_words = filter_words.title().split(', ')
+        filter_words = filter_words.title().split(", ")
 
         for aeroplane in aeroplanes:
             for word in filter_words:
@@ -86,14 +85,21 @@ class Aeroplane:
 
         return filter_list
 
+    @staticmethod
+    def get_top_aeroplanes(aeroplanes: list[list[Aeroplane]], top_n) -> list[list[Aeroplane]]:
+        top_n_aeroplanes = aeroplanes[:top_n]
+        return top_n_aeroplanes
+
 
 if __name__ == "__main__":
     api = AeroplanesAPI()
-    ati = api.get_aeroplanes('Spain')
+    ati = api.get_aeroplanes("Spain")
 
     pi = Aeroplane.cast_to_object_list(ati)
 
     print(pi)
-    print(Aeroplane.filter_aeroplanes(pi, 'Spain, China'))
+    print(Aeroplane.filter_aeroplanes(pi, "Spain, China"))
     print(Aeroplane.geo_altitude_comparison(pi))
     print(Aeroplane.speed_comparison(pi))
+    print(Aeroplane.get_top_aeroplanes(pi, 3))
+    print(str(Aeroplane.get_top_aeroplanes(pi, 3)))
