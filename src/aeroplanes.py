@@ -76,6 +76,8 @@ class Aeroplane:
     def filter_aeroplanes(aeroplanes: list[list[Aeroplane]], filter_words: str) -> list[list[Aeroplane]]:
         """Функция для фильтрации самолётов по стране регистрации"""
         filter_list = list()
+        if not filter_words:
+            return aeroplanes
         filter_words = filter_words.title().split(", ")
 
         for aeroplane in aeroplanes:

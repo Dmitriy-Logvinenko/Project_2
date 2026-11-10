@@ -15,6 +15,7 @@ def user_interaction():
 
     filter_words = input("Введите названия стран, для фильтрации по стране регистрации, через запятую: ")
     if not filter_words:
+        print("Не удалось найти страну регистрации. Будет выведен список по всем имеющимся странам.")
         filter_words = country
 
     api = AeroplanesAPI()
@@ -26,7 +27,7 @@ def user_interaction():
         sorted_geo_altitude = Aeroplane.geo_altitude_comparison(aero_of_fw)
         top_aeroplanes = Aeroplane.get_top_aeroplanes(sorted_geo_altitude, top_n)
         if top_aeroplanes == []:
-            print("Не удалось найти самолёты по стране регистрации.")
+            print("Не удалось найти самолёты по заданной стране регистрации.")
             return ""
 
         json_saver = JSONSaver()
