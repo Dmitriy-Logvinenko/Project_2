@@ -86,9 +86,13 @@ class Aeroplane:
         return filter_list
 
     @staticmethod
-    def get_top_aeroplanes(aeroplanes: list[list[Aeroplane]], top_n) -> list[list[Aeroplane]]:
-        top_n_aeroplanes = aeroplanes[:top_n]
-        return top_n_aeroplanes
+    def get_top_aeroplanes(aeroplanes: list[list[Aeroplane]], top_n: int) -> list[list[Aeroplane]]:
+        if top_n != 0:
+            top_n_aeroplanes = aeroplanes[:top_n]
+            return top_n_aeroplanes
+        else:
+            print("Не удалось обработать данные. Будет выведен полный список.")
+            return aeroplanes
 
 
 if __name__ == "__main__":
