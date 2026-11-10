@@ -91,7 +91,6 @@ class Aeroplane:
             top_n_aeroplanes = aeroplanes[:top_n]
             return top_n_aeroplanes
         else:
-            print("Не удалось обработать данные. Будет выведен полный список.")
             return aeroplanes
 
 
