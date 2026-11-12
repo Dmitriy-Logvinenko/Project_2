@@ -1,5 +1,6 @@
 import os
 
+import requests
 from requests import get
 from abc import ABC, abstractmethod
 from dotenv import load_dotenv
@@ -35,7 +36,7 @@ class AeroplanesAPI(BaseAPI):
             'limit': 1,
         }
 
-        response = get(url=self.openstreetmap_url, params=params_nominatim, headers=headers_nominatim)
+        response = requests.get(url=self.openstreetmap_url, params=params_nominatim, headers=headers_nominatim)
 
         data = response.json()
 
@@ -48,7 +49,7 @@ class AeroplanesAPI(BaseAPI):
             'lomax': geo_coordinates[3],
         }
 
-        response = get(url=self.opensky_url, params=params)
+        response = requests.get(url=self.opensky_url, params=params)
 
         self.aeroplanes = dict(response.json())
 
@@ -59,4 +60,4 @@ if __name__ == "__main__":
     api = AeroplanesAPI()
     ati = api.get_aeroplanes('Canada')
 
-    print(api.aeroplanes)
+    print(ati)
